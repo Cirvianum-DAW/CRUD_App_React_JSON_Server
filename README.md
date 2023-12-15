@@ -12,3 +12,10 @@ npm install -g json-server
 
 Al fitxer `db.json` hi ha les dades que fa servir JSON Server per crear l'API REST.
 El fitxer `index.js` sota la carpeta `api` és el responsable de gestionar les peticions a l'API REST.
+
+Per executar JSON Server cal executar la següent comanda:
+
+```bash
+npx json-server --watch db.json --port 3001
+```
+

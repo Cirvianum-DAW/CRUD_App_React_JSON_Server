@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { create, read, update, remove } from '../api/index';
+import { read, create, update, remove } from '../api/index';
 
 // Anem a fer un CRUD de tasques
 function TodoList() {
@@ -8,7 +8,35 @@ function TodoList() {
   // Creem un estat per guardar el nou item que s'afegirà. D'aquesta manera
   const [newItem, setNewItem] = useState('');
 
-  
+  // READ
+  useEffect(() => {
+    read().then(setItems);
+  }, []);
+
+  // CREATE
+  const handleAdd = () => {
+    create({ title: newItem, completed: false }).then((newTask) => {
+      setItems([...items, newTask]);
+      setNewItem('');
+    });
+  };
+
+  // UPDATE
+
+  const handleUpdate = (id) => {
+    const item = items.find((item) => item.id === id);
+    update(id, { ...item, completed: !item.completed }).then((updatedTask) => {
+      setItems(items.map((item) => (item.id === id ? updatedTask : item)));
+    });
+  };
+
+  // DELETE
+
+  const handleDelete = (id) => {
+    remove(id).then(() => {
+      setItems(items.filter((item) => item.id !== id));
+    });
+  };
 
   return (
     <div className="container mx-auto p-4">
